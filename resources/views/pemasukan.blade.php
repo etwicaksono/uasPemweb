@@ -185,7 +185,7 @@
 				url: $('#form').attr('action'), 
                 // method: $('#form').attr('method'),
                 method: 'get',
-				data: form.serialize(),
+                data: form.serialize(),
 				processData: false,
 				contentType: false,
 				cache: false,
@@ -202,7 +202,9 @@
 					    Swal.fire(response.msg, response.info, response.icon)
                     }
 						// resetForm();
-				}
+				},error: function(response){
+                    console.log(response);
+                }
 			});
 		});
 

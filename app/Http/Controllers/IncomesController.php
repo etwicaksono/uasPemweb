@@ -54,6 +54,7 @@ class IncomesController extends Controller
      */
     public function store(Request $request)
     {
+        // $request = $request->data;
         $id = $request->id;
         if($id == ''){
             $tanggal = explode('/',$request->tanggal);
@@ -73,8 +74,10 @@ class IncomesController extends Controller
                 $response = ['msg' => 'Gagal', 'info' => 'Gagal Menambah Data', 'icon' => 'error'];
             }
         } else {
-            $res = Income::where('id', $id)->update([
-                'date' => $request->tanggal,
+            $tanggal = explode('/',$request->tanggal);
+            $tanggal = $tanggal[2].'-'.$tanggal[1].'-'.$tanggal[0].' '.date('H:i:s');
+            $res = Income::where('id', $id)->update([                
+                'date' => $tanggal,
                 'assets' => $request->terimaDari,
                 'i_accounts' => $request->simpanKe,
                 'total' => $request->jumlah,
@@ -136,7 +139,7 @@ class IncomesController extends Controller
     public function destroy($id)
     {
         // dd($id);
-        $res = Income::where('id', $id)->delete();
+        $res = Income::where('id','=', $id)->delete();
         // dd($res);
         if($res == true){
             $response = ['msg' => 'Berhasil', 'info' => 'Berhasil Menghapus Data', 'icon' => 'success', 'status' => 1];
